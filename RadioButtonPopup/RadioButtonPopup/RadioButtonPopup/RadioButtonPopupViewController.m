@@ -7,32 +7,154 @@
 //
 
 #import "RadioButtonPopupViewController.h"
+#import "DLRadioButton.h"
 
 @interface RadioButtonPopupViewController ()
-
+@property (strong, nonatomic) RadioButtonPopupHandler hander;
+@property (nonatomic) NSArray<NSString *> *messages;
+@property (nonatomic) NSString *selectedMessage;
+@property (nonatomic) BOOL addDLRadiobuttonDone;
+@property (nonatomic) UIColor* uiColor;
+@property (strong, nonatomic) IBOutlet UIView *RadioButtonView;
+- (IBAction)OKButton:(id)sender;
+- (IBAction)CacncleButton:(id)sender;
 @end
 
 @implementation RadioButtonPopupViewController
 
+static const int RADIOBUTTON_TITLELABEL_FONT_SIZE = 15;
+static const CGFloat RADIOBUTTON_V_MARGIN = 13.0;
+
 +(RadioButtonPopupViewController *)
 showRadioButtonPopupWithButtonType:(RadioButtonPopupHandler)handler
 messages:(nonnull NSArray<NSString *> *)messages
+uicolor: (UIColor *)uiColor
 selectedMessage:(nonnull NSString *)selectedMessage
 {
     RadioButtonPopupViewController *vc = [UIStoryboard storyboardWithName:NSStringFromClass(self) bundle:nil].instantiateInitialViewController;
-//    vc.hander = handler;
-//    vc.messages = messages;
-//    vc.selectedMessage = selectedMessage;
-//    vc.addDLRadiobuttonDone = NO;
+    vc.hander = handler;
+    vc.messages = messages;
+    vc.selectedMessage = selectedMessage;
+    vc.addDLRadiobuttonDone = NO;
+    if (uiColor) {
+        vc.uiColor = uiColor;
+    }else{
+        vc.uiColor = [UIColor blackColor];
+    }
     [vc show];
     return vc;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self getRadioButtonViewHeight];
 }
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
+    [self addDLRadioButton];
+}
+
+-(void)getRadioButtonViewHeight{
+    if (self.messages.count > 1) {
+        
+        self.RadioButtonView.translatesAutoresizingMaskIntoConstraints = NO;
+        self.RadioButtonView.frame = CGRectMake(self.RadioButtonView.frame.origin.x, self.RadioButtonView.frame.origin.y, self.RadioButtonView.frame.size.width, self.RadioButtonView.frame.size.width + 30*(self.messages.count - 1));
+    }
+}
+
+-(void)addDLRadioButton{
+    if (self.addDLRadiobuttonDone) {
+        return;
+    }
+    NSInteger i = 0;
+    NSInteger selectedNumber = 0;
+    NSMutableArray *otherButtons = [NSMutableArray new];
+    
+    DLRadioButton *firstRadioButton = [self createRadioButtonWithFrame:CGRectMake(self.RadioButtonView.frame.size.width/2, 0, self.messages[0]*, <#CGFloat height#>)
+                                                                 Title:self.messages[0]];
+    [self.RadioButtonView addSubview:firstRadioButton];
+    NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:firstRadioButton
+                                                                     attribute:NSLayoutAttributeTop
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:self.radioBtnview
+                                                                     attribute:NSLayoutAttributeTop
+                                                                    multiplier:1.0
+                                                                      constant:0.0];
+    NSLayoutConstraint *leftConstraint = [NSLayoutConstraint constraintWithItem:firstRadioButton
+                                                                      attribute:NSLayoutAttributeLeft
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:self.radioBtnview
+                                                                      attribute:NSLayoutAttributeLeft
+                                                                     multiplier:1.0
+                                                                       constant:0.0];
+    firstRadioButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.radioBtnview addConstraints:@[topConstraint, leftConstraint]];
+    
+    DLRadioButton *aboveRadioButton = firstRadioButton;
+    
+    for (NSString *msg in self.messages) {
+        DLRadioButton *radioButton = nil;
+        CGFloat textWidth = 0;
+        if (i==0) {
+            radioButton = firstRadioButton;
+            [firstRadioButton setTitle:msg forState:UIControlStateNormal];
+        }else{
+            //1つ以上
+            radioButton = [self createRadioButtonWithTitle:msg
+                                                     Color:color29626b];
+            [self.radioBtnview addSubview:radioButton];
+            radioButton.translatesAutoresizingMaskIntoConstraints = NO;
+            topConstraint = [NSLayoutConstraint constraintWithItem:radioButton
+                                                         attribute:NSLayoutAttributeTop
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:aboveRadioButton
+                                                         attribute:NSLayoutAttributeBottom
+                                                        multiplier:1.0
+                                                          constant:RADIOBUTTON_V_MARGIN];
+            leftConstraint = [NSLayoutConstraint constraintWithItem:radioButton
+                                                          attribute:NSLayoutAttributeLeft
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.radioBtnview
+                                                          attribute:NSLayoutAttributeLeft
+                                                         multiplier:1.0
+                                                           constant:0.0];
+            [self.radioBtnview addConstraints:@[topConstraint, leftConstraint]];
+            [otherButtons addObject:radioButton];
+            aboveRadioButton = radioButton;
+        }
+        
+        textWidth = [radioButton sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)].width;
+        CGFloat radioButtonWidth = textWidth + radioButton.iconSize + radioButton.marginWidth;
+        NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:radioButton
+                                                                           attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth
+                                                                          multiplier:1.0
+                                                                            constant:radioButtonWidth];
+        [radioButton addConstraint:widthConstraint];
+        if ([msg compare:self.selectedMessage] == NSOrderedSame) {
+            selectedNumber = i;
+        }
+        i++;
+    }
+    firstRadioButton.otherButtons = otherButtons;
+    
+    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:aboveRadioButton
+                                                                        attribute:NSLayoutAttributeBottom
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.radioBtnview
+                                                                        attribute:NSLayoutAttributeBottom
+                                                                       multiplier:1.0
+                                                                         constant:0.0];
+    [self.radioBtnview addConstraint:bottomConstraint];
+    
+    
+    //選択済みの初期項目
+    if (selectedNumber == 0) {
+        firstRadioButton.selected = YES;
+        self.selectedMessage = firstRadioButton.titleLabel.text;
+    }else{
+        firstRadioButton.otherButtons[selectedNumber - 1].selected = YES;
+    }
+    self.addDLRadiobuttonDone = YES;
 }
 /*
 #pragma mark - Navigation
@@ -43,6 +165,24 @@ selectedMessage:(nonnull NSString *)selectedMessage
     // Pass the selected object to the new view controller.
 }
 */
+#pragma mark - Helper
+
+- (DLRadioButton *)createRadioButtonWithFrame:(CGRect) frame
+                                        Title:(NSString *)title
+{
+    DLRadioButton *radioButton = [[DLRadioButton alloc] initWithFrame:frame];
+    radioButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    [radioButton setTitle:title forState:UIControlStateNormal];
+    [radioButton setTitleColor:self.uiColor forState:UIControlStateNormal];
+    radioButton.iconColor = self.uiColor;
+    radioButton.indicatorColor = self.uiColor;
+    radioButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [radioButton addTarget:self action:@selector(selectedButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:radioButton];
+    
+    return radioButton;
+}
+
 -(void)show
 {
     
@@ -51,4 +191,25 @@ selectedMessage:(nonnull NSString *)selectedMessage
    [rootVC presentViewController:self animated:NO completion:nil];
 }
 
+- (IBAction)selectedButton:(DLRadioButton *)radioButton {
+    NSLog(@"%@ is selected.\n", radioButton.selectedButton.titleLabel.text);
+    self.selectedMessage = radioButton.selectedButton.titleLabel.text;
+}
+
+- (IBAction)OKButton:(id)sender {
+    [self dismissViewControllerAnimated:NO completion:NULL];
+    if (self.hander) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.hander(ButtonTypeOK,self.selectedMessage);
+        });
+    }
+}
+- (IBAction)CacncleButton:(id)sender {
+    [self dismissViewControllerAnimated:NO completion:NULL];
+    if (self.hander) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.hander(ButtonTypeCancel,@"");
+        });
+    }
+}
 @end

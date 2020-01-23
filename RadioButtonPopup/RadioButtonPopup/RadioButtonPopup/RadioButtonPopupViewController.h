@@ -13,14 +13,14 @@ NS_ASSUME_NONNULL_BEGIN
 @interface RadioButtonPopupViewController : UIViewController
 
 typedef NS_ENUM(NSInteger, PopupViewControllerButtonType) {
-    PopupViewControllerButtonTypeOK,
-    PopupViewControllerButtonTypeRetry,
-    PopupViewControllerButtonTypeCancel,
+    ButtonTypeOK,
+    ButtonTypeCancel,
 };
 typedef void (^RadioButtonPopupHandler)(PopupViewControllerButtonType type, NSString *selectedMsg);
 
 +(RadioButtonPopupViewController *)showRadioButtonPopupWithButtonType:(RadioButtonPopupHandler)handler
                                                               messages:(NSArray<NSString *>*)messages
+                                                                 uicolor: (UIColor *)uiColor
                                                        selectedMessage:(NSString *)selectedMessage;
 
 @end

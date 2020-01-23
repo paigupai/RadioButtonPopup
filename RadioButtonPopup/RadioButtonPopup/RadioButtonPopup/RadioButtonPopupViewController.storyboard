@@ -48,12 +48,18 @@
                                                 <color key="backgroundColor" red="0.99953407049999998" green="0.98835557699999999" blue="0.47265523669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <state key="normal" title="Cancle"/>
+                                                <connections>
+                                                    <action selector="CacncleButton:" destination="YxW-or-iHB" eventType="touchUpInside" id="04d-SL-hDG"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Ia-5A-Vr0">
                                                 <rect key="frame" x="170" y="0.0" width="120" height="45"/>
                                                 <color key="backgroundColor" red="0.46202266219999999" green="0.83828371759999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <state key="normal" title="OK"/>
+                                                <connections>
+                                                    <action selector="OKButton:" destination="YxW-or-iHB" eventType="touchUpInside" id="Two-o5-cMz"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -100,6 +106,9 @@
                         <viewLayoutGuide key="safeArea" id="Ysm-4d-KlR"/>
                     </view>
                     <size key="freeformSize" width="414" height="736"/>
+                    <connections>
+                        <outlet property="RadioButtonView" destination="H7T-tV-cFa" id="66H-ns-tM2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a6b-KQ-JEj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
