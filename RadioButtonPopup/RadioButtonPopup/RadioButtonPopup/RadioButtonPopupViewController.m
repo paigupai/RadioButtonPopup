@@ -25,7 +25,7 @@
 @implementation RadioButtonPopupViewController
 
 static const int RADIOBUTTON_TITLELABEL_FONT_SIZE = 15;
-static const CGFloat RADIOBUTTON_V_MARGIN = 13.0;
+//static const CGFloat RADIOBUTTON_V_MARGIN = 13.0;
 
 +(RadioButtonPopupViewController *)
 showRadioButtonPopupWithButtonType:(RadioButtonPopupHandler)handler

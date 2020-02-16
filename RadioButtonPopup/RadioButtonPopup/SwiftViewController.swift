@@ -26,9 +26,6 @@ class SwiftViewController:UIViewController {
                        "神木みかみ",
                        "東条悠希",
                        "柊つぼみ"]
-      
-        
-        let firstMsg = msgList[0] as String
         
         RadioButtonPopupViewController.showRadioButtonPopup(buttonType:{type,selectedMsg in
             switch type{
@@ -39,6 +36,6 @@ class SwiftViewController:UIViewController {
             @unknown default:
                 print("unknown")
             }
-        }, messages: msgList, uicolor: .black, selectedMessage:firstMsg )
+        }, messages: msgList, uicolor: .black, selectedMessage:self.label.text! )
     }
 }
