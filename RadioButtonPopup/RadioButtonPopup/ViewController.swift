@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        add(asChildViewController: sample1ViewController)
     }
     
     @IBAction func segmentButton(_ sender: UISegmentedControl) {
