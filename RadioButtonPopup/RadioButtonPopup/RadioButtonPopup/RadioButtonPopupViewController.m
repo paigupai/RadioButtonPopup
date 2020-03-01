@@ -24,7 +24,7 @@
 
 @implementation RadioButtonPopupViewController
 
-static const int RADIOBUTTON_TITLELABEL_FONT_SIZE = 15;
+//static const int RADIOBUTTON_TITLELABEL_FONT_SIZE = 15;
 //static const CGFloat RADIOBUTTON_V_MARGIN = 13.0;
 
 +(RadioButtonPopupViewController *)
@@ -61,9 +61,7 @@ selectedMessage:(nonnull NSString *)selectedMessage
 
 -(void)getRadioButtonViewHeight{
     if (self.messages.count > 1) {
-            self.radioButtonViewHeight.constant = 30*(self.messages.count - 1);
-//        self.RadioButtonView.translatesAutoresizingMaskIntoConstraints = NO;
-//        self.RadioButtonView.frame = CGRectMake(self.RadioButtonView.frame.origin.x, self.RadioButtonView.frame.origin.y, self.RadioButtonView.frame.size.width, self.RadioButtonView.frame.size.width + 30*(self.messages.count - 1));
+            self.radioButtonViewHeight.constant = 20*(self.messages.count - 1);
   }
 }
 
@@ -140,14 +138,14 @@ selectedMessage:(nonnull NSString *)selectedMessage
     }
     firstRadioButton.otherButtons = otherButtons;
 
-    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:aboveRadioButton
-                                                                        attribute:NSLayoutAttributeBottom
-                                                                        relatedBy:NSLayoutRelationEqual
-                                                                           toItem:self.RadioButtonView
-                                                                        attribute:NSLayoutAttributeBottom
-                                                                       multiplier:1.0
-                                                                         constant:0.0];
-    [self.RadioButtonView addConstraint:bottomConstraint];
+//    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:aboveRadioButton
+//                                                                        attribute:NSLayoutAttributeBottom
+//                                                                        relatedBy:NSLayoutRelationEqual
+//                                                                           toItem:self.RadioButtonView
+//                                                                        attribute:NSLayoutAttributeBottom
+//                                                                       multiplier:1.0
+//                                                                         constant:0.0];
+//    [self.RadioButtonView addConstraint:bottomConstraint];
 
     //選択済みの初期項目
     if (selectedNumber == 0) {

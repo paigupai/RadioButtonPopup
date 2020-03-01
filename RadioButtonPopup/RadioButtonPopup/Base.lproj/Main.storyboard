@@ -121,10 +121,10 @@
             </objects>
             <point key="canvasLocation" x="1280" y="356"/>
         </scene>
-        <!--View Controller-->
+        <!--ObjectiveC View Controller-->
         <scene sceneID="ZHx-tH-R9b">
             <objects>
-                <viewController id="9Zb-0I-dB1" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ObjectiveCViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9Zb-0I-dB1" customClass="ObjectiveCViewController" customModule="RadioButtonPopup" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qeI-7U-ttm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -147,6 +147,9 @@
                                                 <integer key="value" value="6"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="popupButtonClicked:" destination="9Zb-0I-dB1" eventType="touchUpInside" id="uyD-8K-Kef"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="select" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aIN-MG-W42">
                                         <rect key="frame" x="152" y="318.5" width="71.5" height="30"/>
@@ -176,6 +179,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hwx-Xt-LQM"/>
                     </view>
+                    <connections>
+                        <outlet property="selectLabel" destination="aIN-MG-W42" id="eos-Y3-Wdz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gK0-yH-rBi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

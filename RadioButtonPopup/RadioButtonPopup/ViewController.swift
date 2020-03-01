@@ -19,11 +19,11 @@ class ViewController: UIViewController {
     @IBAction func segmentButton(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            print(1)
+            print(0)
             add(asChildViewController: sample1ViewController)
         case 1:
-            print(2)
-            remove(asChildViewController: sample1ViewController)
+            print(1)
+            add(asChildViewController: sample1ViewController)
         default:
             print("")
         }
@@ -32,8 +32,14 @@ class ViewController: UIViewController {
     private lazy var sample1ViewController: SwiftViewController = {
         let storyborad = UIStoryboard(name: "Main", bundle: Bundle.main)
         var viewController = storyborad.instantiateViewController(withIdentifier: "SwiftViewController") as! SwiftViewController
-        add(asChildViewController: viewController)
+        //add(asChildViewController: viewController)
         return viewController
+    }()
+    private lazy var sample2ViewController: ObjectiveCViewController = {
+        let storyborad = UIStoryboard(name: "Main", bundle: Bundle.main)
+        var viewController = storyborad.instantiateViewController(withIdentifier: "ObjectiveCViewController") as! ObjectiveCViewController
+        //add(asChildViewController: viewController)
+        return viewController 
     }()
     
     private func add(asChildViewController viewController: UIViewController) {
